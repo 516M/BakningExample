@@ -1,0 +1,6 @@
+jdoe75, John, Doe
+500.0
+jjdo52, Johnny, Doe
+1500.0
+jed12, Jenny, Doe
+4000.0

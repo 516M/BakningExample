@@ -1,2 +1,2 @@
-# Ignore output (binaries)
-out
+# Ignore output
+*/out

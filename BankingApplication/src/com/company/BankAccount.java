@@ -75,6 +75,7 @@ public class BankAccount {
         Double.toString(getBalance()) + " dollars" + "\n" + "Account holder username: " + getUsername();
     }
 
+    // TODO: Create read from file and write to file methods. Test this one out v
     public static BankAccount read(Scanner given_input) {
         given_input.useDelimiter(",");
         String username = given_input.next();
@@ -84,5 +85,5 @@ public class BankAccount {
         double balance = given_input.nextDouble();
         return new BankAccount(name, surname, username, balance);
     }
-    // TODO: Create read from file and write to file methods
+
 }

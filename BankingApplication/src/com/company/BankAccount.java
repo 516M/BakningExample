@@ -1,6 +1,7 @@
 package com.company;
 
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class BankAccount {
@@ -75,15 +76,41 @@ public class BankAccount {
         Double.toString(getBalance()) + " dollars" + "\n" + "Account holder username: " + getUsername();
     }
 
-    // TODO: Create read from file and write to file methods. Test this one out v
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BankAccount)) return false;
+        BankAccount that = (BankAccount) o;
+        return Double.compare(that.getBalance(), getBalance()) == 0 &&
+                Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getSurname(), that.getSurname()) &&
+                Objects.equals(getUsername(), that.getUsername());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getSurname(), getUsername(), getBalance());
+    }
+
     public static BankAccount read(Scanner given_input) {
         given_input.useDelimiter(",");
-        String username = given_input.next();
-        String name = given_input.next();
-        String surname = given_input.next();
+        String username = given_input.next().trim();
+        System.out.println("User " + username);
+
+        String name = given_input.next().trim();
+        System.out.println("Name " + name);
+
+        String surname = given_input.next().trim();
+        System.out.println("Surname " + surname + "AbCD");
         given_input.nextLine();
-        double balance = given_input.nextDouble();
-        return new BankAccount(name, surname, username, balance);
+
+        String balance = given_input.next();
+        System.out.println("Balance: " + balance);
+        return new BankAccount(name, surname, username, Double.parseDouble(balance));
+    }
+
+    public String printFormatted() {
+        return this.username + ", " + this.name + ", " + this.surname + ", \n" + this.balance + ",";
     }
 
 }

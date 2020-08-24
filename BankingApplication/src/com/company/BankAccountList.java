@@ -31,12 +31,30 @@ public class BankAccountList {
         return this.accounts;
     }
 
+    public boolean isEmpty() {
+        if (this.accounts.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         String result = "";
         Iterator<BankAccount> iterator = this.accounts.iterator();
         while(iterator.hasNext()) {
             result += iterator.next().toString() + "\n";
+        }
+        return result;
+    }
+
+    public String printFormatted() {
+        String result = "";
+        BankAccount tmp;
+        Iterator<BankAccount> iterator = this.accounts.iterator();
+        while(iterator.hasNext()) {
+            tmp = iterator.next();
+            result += tmp.printFormatted() + (iterator.hasNext()? "\n" : "");
         }
         return result;
     }
@@ -48,6 +66,4 @@ public class BankAccountList {
         }
         return ac;
     }
-
-    // TODO: Create read from file and write to file methods (uses BankAccount's methods)
 }

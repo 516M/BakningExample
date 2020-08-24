@@ -1,33 +1,25 @@
 package com.company;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.HashSet;
+import java.io.*;
 import java.util.Scanner;
 
 public class BankApplication {
     public static void main(String args[]) throws FileNotFoundException {
-        // Unrealistic example: several bank accounts added into a list
-        /*BankAccount bankAccount = new BankAccount("John", "Doe", "jdoe75");
-        BankAccount bankAccount1 = new BankAccount("Johnny", "Doe", "jjdo52");
-        BankAccount bankAccount2 = new BankAccount("Jenny", "Doe", "jed12");
-        BankAccountList acclist = new BankAccountList();
-        acclist.addBankAccount(bankAccount);
-        acclist.addBankAccount(bankAccount1);
-        acclist.addBankAccount(bankAccount2);*/
-
         Scanner input = new Scanner(System.in);
-
         // TODO: Pass filename as argument to program. Can this be done with just `file_reader.Next()`?
         // String filename = input.next();
         final String filename = "accounts.txt";
 
         Scanner file_reader = new Scanner(new File(filename));
+        BankAccountList accounts = BankAccountList.read(file_reader);
+        String save = accounts.printFormatted();
 
-        BankAccountList accounts = new BankAccountList(new HashSet<BankAccount>());
-        //BankAccountList accounts = BankAccountList.read(file_reader);
-        //PrintWriter file_write = new PrintWriter(filename);
+        PrintWriter file_write = null;
+        try {
+            file_write = new PrintWriter(new FileWriter(filename, true));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         int user_choice;
         boolean login_valid = true;
@@ -43,7 +35,7 @@ public class BankApplication {
             System.out.println("Welcome! \n" +
                     "1. Login\n" +
                     "2. Register\n" +
-                    "3. About\n" +
+                   // "3. About\n" +
                     "4. Print banks\n" +
                     "0. Quit\n" +
                     "Enter your choice: ");
@@ -77,14 +69,16 @@ public class BankApplication {
                 case 3:
                     break;
                 case 4:
-                    System.out.println(accounts.toString());
+                    if (accounts.isEmpty()) {
+                        System.out.println("The bank account list is empty!");
+                        slightDelay();
+                        break;
+                    }
+                    //System.out.println(accounts.toString());
+                    System.out.println(accounts.printFormatted());
                     slightDelay();
                     break;
-                case 5:
-                    //System.out.println(acclist.toString());
-                    break;
                 case 0:
-                    System.out.println("Quitting..");
                     login_valid = false;
                     break;
                 default:
@@ -93,6 +87,14 @@ public class BankApplication {
                     slightDelay();
                     break;
             }
+        }
+        // TODO: When writing to file, write with a specific order, not randomly!
+        if (!accounts.isEmpty()) {
+            System.out.println("Saving changes..");
+            file_write = new PrintWriter(new File(filename));
+            file_write.write(save);
+            file_write.close();
+            System.out.println("Quitting..");
         }
     }
 
@@ -103,7 +105,7 @@ public class BankApplication {
 
     public static void slightDelay() {
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         }
         catch(InterruptedException ex) {
             Thread.currentThread().interrupt();

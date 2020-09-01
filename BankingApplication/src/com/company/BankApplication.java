@@ -5,11 +5,9 @@ import java.util.Scanner;
 
 public class BankApplication {
     public static void main(String args[]) throws FileNotFoundException {
-        Scanner input = new Scanner(System.in);
-        // TODO: Pass filename as argument to program. Can this be done with just `file_reader.Next()`?
-        // String filename = input.next();
-        final String filename = "accounts.txt";
+        final String filename = args[0];
 
+        Scanner input = new Scanner(System.in);
         Scanner file_reader = new Scanner(new File(filename));
         BankAccountList accounts = BankAccountList.read(file_reader);
         String save = accounts.printFormatted();
@@ -75,7 +73,7 @@ public class BankApplication {
                         break;
                     }
                     //System.out.println(accounts.toString());
-                    System.out.println(accounts.printFormatted());
+                    System.out.println(accounts.toString());
                     slightDelay();
                     break;
                 case 0:
@@ -88,7 +86,7 @@ public class BankApplication {
                     break;
             }
         }
-        // TODO: When writing to file, write with a specific order, not randomly!
+        // TODO: When writing to file, write the accounts with a specific order, not randomly!
         if (!accounts.isEmpty()) {
             System.out.println("Saving changes..");
             file_write = new PrintWriter(new File(filename));

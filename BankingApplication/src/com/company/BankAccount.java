@@ -65,9 +65,9 @@ public class BankAccount {
     }
 
     // TODO: add options here? Or is just the bank account's toString gonna be used?
-    public void showBalance() {
-        System.out.println("Your balance currently stands at :\n" +
-                "$"+getBalance()+" .");
+    public String showBalance() {
+        return "Your balance currently stands at :\n" +
+                "$"+getBalance()+" .";
     }
 
     @Override
@@ -95,17 +95,10 @@ public class BankAccount {
     public static BankAccount read(Scanner given_input) {
         given_input.useDelimiter(",");
         String username = given_input.next().trim();
-        System.out.println("User " + username);
-
         String name = given_input.next().trim();
-        System.out.println("Name " + name);
-
         String surname = given_input.next().trim();
-        System.out.println("Surname " + surname + "AbCD");
         given_input.nextLine();
-
         String balance = given_input.next();
-        System.out.println("Balance: " + balance);
         return new BankAccount(name, surname, username, Double.parseDouble(balance));
     }
 
